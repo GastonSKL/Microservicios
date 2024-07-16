@@ -33,6 +33,25 @@ namespace Microservices.Controllers
                 );
         }
 
+        [HttpPut("{productId}")]
+        public ActionResult Update(int productId, ProductService product)
+        {
+            var originalEntry = Products.Single(x => x.Id == productId);
+            originalEntry.Name = product.Name;
+            originalEntry.Description = product.Description;
+            originalEntry.Price = product.Price;
+
+            return NoContent();
+        }
+
+        [HttpDelete("{productId}")]
+        public ActionResult Delete(int productId)
+        {
+            Products = Products.Where(x => x.Id != productId).ToList();
+
+            return NoContent();
+        }
+
         private static List<ProductService> Products = new List<ProductService>
         {
             new ProductService
